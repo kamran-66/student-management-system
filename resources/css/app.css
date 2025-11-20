@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+
+input, select {
+    @apply bg-white py-3 px-2 border border-gray-600 rounded-md
+}
