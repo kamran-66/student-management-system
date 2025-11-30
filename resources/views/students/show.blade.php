@@ -31,10 +31,17 @@
                             <th class="px-4 py-2 text-left text-gray-600">Acdemic_Year:</th>
                             <td class="px-4 py-2">{{ $student->section?->academicYear?->name ?? 'No Data' }}</td>
                         </tr>
-                        <tr>
-                            <th class="px-4 py-2 text-left text-gray-600">Course:</th>
-                            <td class="px-4 py-2">{{ $student->section->course->name ?? 'No Data' }}</td>
-                        </tr>
+
+                         <tr>
+                        <th class="px-4 py-2 text-left text-gray-600">Course:</th>
+                        <td class="px-4 py-2">
+                            <div class="space-x-2">
+                              
+                                    <span class="px-3 py-1 bg-red-500 text-white rounded-lg">{{ $student->section->course->name ?? 'No Data'}}</span>
+
+                              </div>
+                          </td>
+                      </tr>
                     </tbody>
                 </table>
             </div>
