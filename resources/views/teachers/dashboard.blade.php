@@ -4,10 +4,16 @@
     <main class="p-6">
         <div class="max-w-7xl mx-auto">
             <div class=" flex justify-between items-center">
-            <div>
+            {{-- <div>
             <h2 class="text-3xl font-bold text-gray-800 mb-2">Teachers Dashboard</h2>
             <p class="text-gray-600 mb-6">Use the sidebar to navigate through your pages.</p>
-            </div>
+            </div> --}}
+
+                <x-page-heading
+                heading="Welcome to Teachers Dashboard"
+                subheading="Use the sidebar to navigate through your pages.">
+                
+            </x-page-heading>
 
             
                    @if (session('success'))
@@ -27,31 +33,42 @@
 </a>
 </div>
 
-            <h3 class="text-2xl font-semibold text-gray-700 mb-4">All Teachers Data</h3>
-
-            <div class="overflow-x-auto bg-white border border-gray-200 shadow-sm rounded-lg">
+            <div class="overflow-x-auto bg-white border border-gray-200 shadow-sm rounded-lg mt-6">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="py-2 px-4 border-b text-left">ID</th>
+                        {{-- <th class="py-2 px-4 border-b text-left">Image</th> --}}
                         <th class="py-2 px-4 border-b text-left">Name</th>
                         <th class="py-2 px-4 border-b text-left">Email</th>
                         <th class="py-2 px-4 border-b text-left">Section</th>
-                        <th class="py-2 px-4 border-b text-left">Courses</th>
-                        <th class="py-2 px-4 border-b text-left">Academic Year</th>
                         <th class="py-2 px-4 border-b text-left">Actions</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                     @foreach ($teachers as $teacher)
-                        <tr class="hover:bg-gray-50">
-                            <td class="py-2 px-4 border-b">{{ $teacher->id }}</td>
+                    
+                    @foreach ($teachers as $teacher)
+
+                       <td class="py-2 px-4 border-b">
+    <div class="flex items-center space-x-3">
+        <span>{{ $teacher->id }}</span>
+
+        @if($teacher?->image)
+            <img 
+                src="{{ asset('users/'.$teacher->image) }}" 
+                class="w-10 h-10 rounded-full border border-gray-700 bg-gray-500 ml-3"
+            >
+        @endif
+    </div>
+</td>
+
+
                             <td class="py-2 px-4 border-b">{{ $teacher->name }}</td>
                             <td class="py-2 px-4 border-b">{{ $teacher->email }}</td>
-                            <td class="py-2 px-4 border-b">{{ $teacher->section->name }}</td>
-                            <td class="py-2 px-4 border-b">{{ $teacher->section->academicYear->courses->count() }}</td>
-                <td class="py-2 px-4 border-b">{{ $teacher->section?->academicYear?->name ?? 'No Data' }}</td>
+                            <td class="py-2 px-4 border-b">{{ $teacher->section->name ?? 'No Data'}}</td>
+                            
+              
 
                          @if(Auth::user()->role === 'admin' || Auth::id() === $teacher->id)
                 <td class="py-2 px-4 border-b">
@@ -83,11 +100,10 @@
                 </tbody>
             </table>
         </div>
+        <div class="mt-4 flex justify-center">
+            {{ $teachers->links() }}
+        </div>
     </main>
 </div>
 
-
 </x-app-layout>
-
-
-

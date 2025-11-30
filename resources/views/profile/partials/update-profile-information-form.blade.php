@@ -25,7 +25,7 @@
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-text-input id="email" name="email" disabled type="email" class="mt-1 block w-full !bg-gray-100" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
             @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
@@ -47,6 +47,18 @@
             @endif
         </div>
 
+        <div>
+            <x-input-label for="role" :value="__('Role')" />
+            <x-text-input id="role" name="role" disabled type="text" class="mt-1 block w-full !bg-gray-100" :value="old('role', $user->role)" required autocomplete="username" />
+        </div>
+
+         @if(Auth::user()->role === 'student')
+         
+        <div>
+            <x-input-label for="registration_no" :value="__('Registration No')" />
+            <x-text-input id="registration_no" name="registration_no" disabled type="text" class="mt-1 block w-full !bg-gray-100" :value="old('registration_no', $user->registration_no)" required autocomplete="registration_no" />
+        </div>
+        @endif
         <div class="flex items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 

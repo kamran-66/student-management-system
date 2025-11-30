@@ -2,13 +2,24 @@
     
     <div class="w-8/12 mx-auto">
         
-        <form method="POST" action="{{ route('students.store') }}">
+        <form method="POST" action="{{ route('students.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div>
             <h2 class="text-3xl font-bold text-gray-800 mb-2 mt-6">Add Student</h2>
             <p class="text-gray-600 mb-6">Use the sidebar to navigate through your pages.</p>
             </div>
+
+        <!-- Image -->
+        <div>
+            <x-input-label for="image" :value="__('Profile Image')" />
+            <x-text-input id="image"  class="border p-2 w-full" type="file" name="image"   required autofocus autocomplete="image" />
+            <x-input-error :messages="$errors->get('image')" class="mt-2" />
+                
+                {{-- @if($student->image)
+        <img src="{{ asset('storage/users/'.$student->image) }}" class="w-24 mt-3 rounded">
+    @endif
+        </div> --}}
 
         <!-- Name -->
         <div>
@@ -46,7 +57,7 @@
             </div>
 
             <!-- Class / Teacher -->
-            <div class="mt-4">
+            {{-- <div class="mt-4">
                 <x-input-label for="teacher_id" :value="__('Teacher Name')" />
                 <select id="teacher_id" name="teacher_id"
                     class="block mt-1 w-full py-3 bg-white rounded-md shadow-sm focus:ring focus:ring-indigo-200"
@@ -57,7 +68,7 @@
                     @endforeach
                 </select>
                 <x-input-error :messages="$errors->get('teacher_id')" class="mt-2" />
-            </div>
+            </div> --}}
 
             <!-- Class / Section -->
             

@@ -46,7 +46,7 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name' => ['required','string','max:255'],
+            'name' => ['required','unique:courses','string','max:255'],
             'category_id' => ['required'],
             'academic_year_id' => ['required'],
             

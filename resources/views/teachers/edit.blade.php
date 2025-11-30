@@ -2,7 +2,7 @@
 
     <div class="w-8/12 mx-auto">
     
-<form action="{{route('teachers.update', $teacher->id)}}" method="POST">
+<form action="{{route('teachers.update', $teacher->id)}}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -11,6 +11,16 @@
             <h2 class="text-3xl font-bold text-gray-800 mb-2 mt-6">Edit Teacher</h2>
             <p class="text-gray-600 mb-6">Use the sidebar to navigate through your pages.</p>
             </div>
+
+              <!-- Image -->
+        <div>
+            <x-input-label for="image" :value="__('Profile Image')" />
+            <x-text-input id="image"  value="{{ old('image',$teacher->image) }}"  class="border p-2 w-full" type="file" name="image"   required autofocus autocomplete="image" />
+            <x-input-error :messages="$errors->get('image')" class="mt-2" />
+                  @if($teacher->image)
+                    <img src="{{ asset('users/'.$teacher->image) }}" class="w-24 mt-3 rounded">
+                @endif
+        <div>
 
       <!-- Name -->
         <div>
@@ -49,6 +59,7 @@
  </form>
 
 </div>
+
 
  </x-app-layout>
 

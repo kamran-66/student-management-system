@@ -4,11 +4,12 @@
    <main class="p-6">
        <div class="max-w-7xl mx-auto">
             <div class=" flex justify-between items-center">
-            <div>
-            <h2 class="text-3xl font-bold text-gray-800 mb-2">Students Dashboard</h2>
-            <p class="text-gray-600 mb-6">Use the sidebar to navigate through your pages.</p>
-            </div>
 
+            <x-page-heading 
+                heading="Students Dashboard" 
+                subheading="Use the sidebar to navigate through your pages.">
+                
+            </x-page-heading>
             
                    @if (session('success'))
     <div 
@@ -27,33 +28,49 @@
 </a>
 </div>
 
-            <h2 class="text-2xl font-semibold text-gray-700 mb-4">All Students Dashboard</h2>
-
           
 
-<table class="min-w-full bg-white border border-gray-200 shadow-sm rounded-lg">
+<table class="min-w-full bg-white border border-gray-200 shadow-sm rounded-lg mt-6">
     <thead class="bg-gray-100">
         <tr>
             <th class="py-2 px-4 border-b text-left">ID</th>
+            {{-- <th class="py-2 px-4 border-b text-left">Image</th> --}}
             <th class="py-2 px-4 border-b text-left">Name</th>
             <th class="py-2 px-4 border-b text-left">Email</th>
-            <th class="py-2 px-4 border-b text-left">Registration_No</th>
+            <th class="py-2 px-4 border-b text-left">Registration No</th>
             <th class="py-2 px-4 border-b text-left">Section</th>
-            <th class="py-2 px-4 border-b text-left">Course</th>
-            <th class="py-2 px-4 border-b text-left">Academic Year</th>
+            {{-- <th class="py-2 px-4 border-b text-left">Course</th> --}}
+            {{-- <th class="py-2 px-4 border-b text-left">Batch Year</th> --}}
             <th class="py-2 px-4 border-b text-left">Actions</th>
         </tr>
     </thead>
     <tbody>
+
         @foreach ($students as $student)
             <tr class="hover:bg-gray-50">
-                <td class="py-2 px-4 border-b">{{ $student->id }}</td>
+                
+               <td class="py-2 px-4 border-b">
+    <div class="flex items-center space-x-3">
+        <span>{{ $student->id }}</span>
+
+        @if($student?->image)
+            <img 
+                src="{{ asset('users/'.$student->image) }}" 
+                class="w-10 h-10 rounded-full border border-gray-700 bg-gray-500 ml-3"
+            >
+        @endif
+    </div>
+</td>
+
+            
+                
+
                 <td class="py-2 px-4 border-b">{{ $student->name }}</td>
                 <td class="py-2 px-4 border-b">{{ $student->email }}</td>
                 <td class="py-2 px-4 border-b">{{ $student->registration_no ?? 'No Data' }}</td>
-                <td class="py-2 px-4 border-b">{{ $student->section?->name ?? 'No Data'}}</td>
-                <td class="py-2 px-4 border-b">{{ $student->section->course->name ?? 'No Data' }}</td>
-                <td class="py-2 px-4 border-b">{{ $student->section?->academicYear?->name ?? 'No Data' }}</td>
+                <td class="py-2 px-4 border-b">{{ $student->section?->name. " - ". $student->section->academicYear->category->name ?? 'No Data'}}</td>
+                {{-- <td class="py-2 px-4 border-b">{{ $student->section?->academicYear?->courses->count() ?? 'No Data' }}</td> --}}
+                {{-- <td class="py-2 px-4 border-b">{{ $student->section?->academicYear?->name ?? 'No Data' }}</td> --}}
                 
                  @if(Auth::user()->role === 'admin' || Auth::id() === $student->id)
 
@@ -86,4 +103,8 @@
         @endforeach
     </tbody>
 </table>
+
+ <div class="mt-4 flex justify-center">
+    {{ $students->links() }}
+</div>
 </x-app-layout>

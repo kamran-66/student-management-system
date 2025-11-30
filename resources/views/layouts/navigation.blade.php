@@ -1,45 +1,54 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-200"> 
+    <!-- Primary Navigation Menu --> <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+         <div class="flex justify-between h-16"> <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
+                <div class="flex items-center space-x-8">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        <img src="{{ asset('images/college.png') }}" class="h-12" alt="College Logo">
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex text-grey">
+                
+                <!-- Student Links -->
+                   {{-- @if(Auth::user()->role === 'student')
+                    <x-nav-link :href="route('students.studentdashboard')" :active="request()->routeIs('students')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                
-            
+                    @endif
+
+
+                    <!-- Teacher Links -->
+                    @if(Auth::user()->role === 'teacher')
+                    <x-nav-link :href="route('teachers.teacherdashboard')" :active="request()->routeIs('teacher')">
+                        {{ __('Dashboard') }}
+                    </x-nav-link>
+                    @endif --}}
+
+                    <!-- Admin Links -->
                
-                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('teachers')">
+                {{-- @if(Auth::user()->role === 'admin')
+               
+                <x-nav-link :href="route('admin.admindashboard')" :active="request()->routeIs('admindashboard')">
+                    {{ __('Dashboard') }}
+                </x-nav-link>
+
+
+                    <x-nav-link :href="route('admin.dashboard')" :active="request()->routeIs('admin')">
                         {{ __('Admin') }}
                     </x-nav-link>
+
                     
                     <x-nav-link :href="route('students.dashboard')" :active="request()->routeIs('students')">
                         {{ __('Students') }}
                     </x-nav-link>
+
                     
                     <x-nav-link :href="route('teachers.dashboard')" :active="request()->routeIs('teachers')">
                         {{ __('Teachers') }}
-                    </x-nav-link>
-                
-                
-
-                    <x-nav-link :href="route('courses.dashboard')" :active="request()->routeIs('courses')">
-                        {{ __('Courses') }}
-
-
-                    </x-nav-link>
-                    <x-nav-link :href="route('category.dashboard')" :active="request()->routeIs('categories')">
-                        {{ __('Category') }}
-                    </x-nav-link>
+                    </x-nav-link>        
 
                     
                     <x-nav-link :href="route('sections.dashboard')" :active="request()->routeIs('section')">
@@ -48,44 +57,82 @@
 
 
                     <x-nav-link :href="route('year.dashboard')" :active="request()->routeIs('year')">
-                        {{ __('Academic_Year') }}
+                        {{ __('Batch Year') }}
                     </x-nav-link>
 
+                     <x-nav-link :href="route('courses.dashboard')" :active="request()->routeIs('courses')">
+                        {{ __('Courses') }}
+                      </x-nav-link>
+
+                       <x-nav-link :href="route('category.dashboard')" :active="request()->routeIs('categories')">
+                        {{ __('Programs') }}
+                    </x-nav-link>
+
+                     @endif
+
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+            <div class="hidden sm:flex sm:items-center sm:ms-230">
+               <x-dropdown align="right" width="48">
 
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
+    <x-slot name="trigger">
+     <button class="flex items-center space-x-2 px-3 py-2 text-sm font-medium rounded-md hover:bg-white/10 transition">
+    <div>{{ Auth::user()->name }}</div>
+    <div class="ms-2">
 
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
+        <!-- Elegant dropdown icon -->
+         <svg class="w-4 h-4 text-grey opacity-80" fill="none" stroke="currentColor"
+            stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
+             stroke-linejoin="round">
+            <path d="M19 9l-7 7-7-7" />
+        </svg>
+    </div>
+</button>
 
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+    </x-slot>
 
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
+    <x-slot name="content">
+
+         @php 
+        $role = Auth::user()->role;
+        $id   = Auth::id();
+    @endphp
+
+    {{-- Dynamic Edit Profile Route Based on Role --}}
+    @if ($role === 'student')
+        <x-dropdown-link :href="route('students.edit', $id)">
+            Edit Profile
+        </x-dropdown-link>
+
+    @elseif ($role === 'teacher')
+        <x-dropdown-link :href="route('teachers.edit', $id)">
+            Edit Profile
+        </x-dropdown-link>
+
+    @elseif ($role === 'admin')
+        <x-dropdown-link :href="route('admin.edit', $id)">
+            Edit Profile
+        </x-dropdown-link>
+    @endif
+
+
+        <x-dropdown-link :href="route('profile.edit')">
+            {{ __('Change Password') }}
+        </x-dropdown-link>
+
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <x-dropdown-link :href="route('logout')"
+                onclick="event.preventDefault(); this.closest('form').submit();">
+                {{ __('Log Out') }}
+            </x-dropdown-link>
+        </form>
+
+    </x-slot>
+</x-dropdown>
+
             </div>
 
             <!-- Hamburger -->

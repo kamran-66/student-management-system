@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Section;
+use App\Models\Course;
+use App\Models\Category;
+use App\Models\Academic;
 
 
 
@@ -21,10 +25,35 @@ class AdminController extends Controller
     public function index()
     {
 
-        $users = User::all();
+        $users = User::paginate(10);
         return view('admin.dashboard', compact('users'));
     }
 
+
+     public function view()
+    {
+        $user = auth()->user();
+
+    // COUNT ANALYTICS
+    $student = User::where('role', 'student')->count();
+    $teacher = User::where('role', 'teacher')->count();
+    $course = Course::count();
+    $section = Section::count();
+    $academic = Academic::count();
+    $category = Category::count();
+
+    return view('admin.admindashboard', compact(
+        'user',
+        'student',
+        'teacher',
+        'course',
+        'section',
+        'academic',
+        'category',
+    ));
+            // return view('admin.admindashboard', compact('user','student'));
+      
+    }
     /**
      * Show the form for creating a new resource.
      */

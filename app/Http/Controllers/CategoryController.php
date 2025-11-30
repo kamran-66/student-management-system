@@ -21,8 +21,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $courses = Course::all();
         $categories = Category::all();
-        return view('category.dashboard', compact('categories'));
+        return view('category.dashboard', compact('categories','courses'));
     }
 
     /**
@@ -38,22 +39,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'name' => ['required','string','min:3']
-        // ]);
+        $validated = $request->validate([
+            'name' => ['required','unique:categories','string','min:3']
+        ]);
 
-        $category = new Category();
-        $category->name = $request->name;
+        // $category = new Category();
+        // $category->name = $request->name;
+        // $category->save();
+        
+        $category = Category::create([
+            'name' => $request->name
+        ]);
+
         $category->save();
-        
-        
-        // Category::create($validated);
-        
-        // Category::create([
-        //     'name' => $request->name
-        // ]);
-
-
         return redirect()->route('category.dashboard')->with('success', 'Category added successfully!');
     }
 
@@ -83,17 +81,15 @@ class CategoryController extends Controller
         
         $category = Category::findorfail($id);
         
-        $category->name = $request->name;
-        $category->save();
+        // $category->name = $request->name;
+        // $category->save();
         
         
-        // $validated = $request->validate([
-        //     'name' => ['required', 'string','min:3']
-        // ]);
-        // Category::update([
-        //     'name' => $request->name
-        // ]);
-        // Category::update($validated);
+        $validated = $request->validate([
+            'name' => ['required', 'string','min:3']
+        ]);
+      
+        $category->update($validated);
 
         return redirect()->route('category.dashboard')->with('success','Category succesfully updated');
     }

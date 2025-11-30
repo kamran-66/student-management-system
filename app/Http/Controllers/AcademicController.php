@@ -9,6 +9,7 @@ use App\Models\Section;
 use App\Models\Academic;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Category;
 
 
 use Illuminate\Http\Request;
@@ -20,9 +21,10 @@ class AcademicController extends Controller
      */
     public function index()
     {
-        $courses = Course::all();
-         $classes = Academic::all();
-        return view('year.dashboard', compact('classes','courses'));
+
+        $batches = Academic::with('category')->get();
+
+        return view('year.dashboard', compact('batches'));
     }
 
     /**
@@ -31,8 +33,10 @@ class AcademicController extends Controller
     public function create()
     {
          $courses = Course::all();
+        $categories = Category::all();
+
         //  $classes = Academic::with('courses')->get();
-        return view('year.add', compact('courses'));
+        return view('year.add', compact('courses','categories'));
         // return view('year.add');
     }
 
@@ -43,6 +47,7 @@ class AcademicController extends Controller
     {
         $validated = $request->validate([
             'name' => ['required','string','max:255'],
+            'category_id' => ['required','string','max:255'],
            
         ]);
 
@@ -67,9 +72,11 @@ class AcademicController extends Controller
     public function edit(string $id)
     {
          $courses = Course::all();
+        $categories = Category::all();
+
 
         $classes = Academic::findorfail($id);
-        return view('year.edit', compact('classes','courses'));
+        return view('year.edit', compact('classes','courses','categories'));
     }
 
     /**
@@ -80,8 +87,10 @@ class AcademicController extends Controller
          $classes = Academic::findorfail($id);
 
         $validated = $request->validate([
-          'name'  => ['required', 'string', 'max:255'],
-          'course_id' => ['required','integer','exists:courses,id'],
+          'name'  => ['required','string','max:255'],
+          'category_id'  => ['required','string','max:255'],
+          
+        //   'course_id' => ['required','integer','exists:courses,id'],
         ]);
 
         $classes->update($validated);

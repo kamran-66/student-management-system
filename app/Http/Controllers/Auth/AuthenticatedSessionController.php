@@ -37,11 +37,11 @@ class AuthenticatedSessionController extends Controller
 
       
       if ($user->role === 'teacher') {
-            return redirect('/teachers/dashboard');
+            return redirect('/teachers/teacherdashboard');
         } elseif ($user->role === 'student') {
-            return redirect('/students/dashboard');
+            return redirect('/students/studentdashboard');
         } elseif ($user->role === 'admin') {
-            return redirect('/admin/dashboard');
+            return redirect('/admin/admindashboard');
         }
 
         return redirect('/dashboard');

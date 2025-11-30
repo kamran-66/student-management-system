@@ -37,5 +37,10 @@ class Section extends Model
         return $this->belongsTo(Course::class,'course_id');
     }
 
+   public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
    
 }

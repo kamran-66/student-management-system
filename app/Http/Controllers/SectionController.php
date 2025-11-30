@@ -9,6 +9,7 @@ use App\Models\Section;
 use App\Models\Academic;
 use App\Models\User;
 use App\Models\Course;
+use App\Models\Category;
 
 use Illuminate\Http\Request;
 
@@ -19,9 +20,14 @@ class SectionController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $sections = Section::all();
-        return view('section.dashboard', compact('sections'));
+    {   
+
+        $sections = Section::with('academicYear')->get();
+        $categories = Category::all();
+
+
+        // dd($sections->first()->academicYear->category);
+        return view('section.dashboard', compact('sections','categories'));
     }
 
     /**
@@ -29,9 +35,10 @@ class SectionController extends Controller
      */
     public function create()
     {
+
        $courses = Course::all();
-       $classes = Academic::all();
-        return view('section.add', compact('classes','courses'));
+       $batches = Academic::all();
+        return view('section.add', compact('batches','courses'));
     }
 
     /**
@@ -40,9 +47,9 @@ class SectionController extends Controller
     public function store(Request $request)
     {
           $validated = $request->validate([
-            'name' => ['required','string','max:255'],
+            'name' => ['required','unique:sections','string','max:255'],
             'academic_year_id' => ['required','string','max:255'],
-            // 'course_id' => ['required','string','max:255'],
+          
            
         ]);
 
@@ -50,7 +57,7 @@ class SectionController extends Controller
         $sections = Section::create([
            'name'=> $request->name,
            'academic_year_id'=> $request->academic_year_id,
-        //    'course_id'=> $request->course_id,
+     
     
         ]);
          return redirect()->route('sections.dashboard')->with('success','Section succesfully added');
@@ -69,11 +76,10 @@ class SectionController extends Controller
      */
     public function edit(string $id)
     {
-       $classes = Academic::all();
-       $courses = Course::all();
-       
+       $batches = Academic::with('category')->get();
+        // dd($batches->first);
         $sections = Section::findorfail($id);
-        return view('section.edit', compact('sections', 'classes','courses'));
+        return view('section.edit', compact('sections', 'batches'));
     }
 
     /**
@@ -87,7 +93,7 @@ class SectionController extends Controller
         $sections = Section::findorfail($id);
 
         $validated = $request->validate([
-          'name'  => ['required', 'string', 'max:255'],
+          'name'  => ['required','string', 'max:255'],
             'academic_year_id' => ['required','string','max:255'],
             // 'course_id' => ['required','string','max:255'],
 

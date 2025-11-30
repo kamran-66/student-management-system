@@ -22,8 +22,11 @@
                                 <select name="academic_year_id" id="academic_year_id" class="block mt-1 w-full py-3 bg-white rounded-md shadow-sm focus:ring focus:ring-indigo-200" :value="old('academic_year_id')" required autocomplete>
                                     <option value="">Select Class</option>
 
-                                     @foreach($classes as $class)
-                                        <option value="{{$class->id}}" @selected($class->id == $sections->academic_year_id) >{{$class->name}}</option>
+                                     @foreach($batches as $batch)
+                                        <option value="{{$batch->id}}" @selected($batch->id == $sections->academic_year_id) >
+                                            {{ $batch->category?->name }} - 
+                                            {{$batch->name}}
+                                        </option>
                                         @endforeach
                                 </select>
     </div>

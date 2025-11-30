@@ -4,9 +4,14 @@
 
     <main class="p-6">
         <div class="max-w-7xl mx-auto">
-            <h2 class="text-3xl font-bold text-gray-800 mb-2">Welcome to Admin Dashboard</h2>
-            <p class="text-gray-600 mb-6">Use the sidebar to navigate through your pages.</p>
-
+            
+            <x-page-heading 
+                heading="Welcome to Admin Dashboard" 
+                subheading="Use the sidebar to navigate through your pages.">
+            
+            {{-- <a href="" class="bg-red-500">Hello</a> --}}
+            </x-page-heading>
+            
             <div class="mb-6">
 
                    @if (session('success'))
@@ -22,10 +27,7 @@
 @endif
    
 
-
-            <h3 class="text-2xl font-semibold text-gray-700 mb-4">All Users Data</h3>
-
-             <div class="overflow-x-auto bg-white border border-gray-200 shadow-sm rounded-lg">
+             <div class="overflow-x-auto bg-white border border-gray-200 shadow-sm rounded-lg mt-8">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
@@ -60,6 +62,11 @@
             </table>
         </div>
     </main>
+
+    <div class="mt-4 flex justify-center">
+    {{ $users->links() }}
+</div>
+
 </div>
 
 </x-app-layout>

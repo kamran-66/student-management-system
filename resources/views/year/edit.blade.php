@@ -8,7 +8,7 @@
 
 
     <div>
-            <h2 class="text-3xl font-bold text-gray-800 mb-2 mt-6">Edit Course</h2>
+            <h2 class="text-3xl font-bold text-gray-800 mb-2 mt-6">Edit Batch Year</h2>
             <p class="text-gray-600 mb-6">Use the sidebar to navigate through your pages.</p>
             </div>
 
@@ -20,16 +20,29 @@
         </div>
 
 
-          {{-- <div class="mt-4">
-                                <x-input-label for="course_id" :value="__('Course')" />
-                                <select name="course_id" id="course_id" class="block mt-1 w-full py-3 bg-white rounded-md shadow-sm focus:ring focus:ring-indigo-200" :value="old('course_id')" required autocomplete>
-                                    <option value="">Select Section</option>
+                        <!-- Category -->
+        <div class="mt-4">
+            <x-input-label for="category" :value="__('Program_id')" />
+            
+                             <div class="mt-4">
+                                <select name="category_id" id="category_id" class="block mt-1 w-full py-3 bg-white rounded-md shadow-sm focus:ring focus:ring-indigo-200" :value="old('category_id')" required autocomplete>
+                                    <option value="">Select Program</option>
                                     
-                                    @foreach($courses as $course)
-                                        <option value="{{$course->id}}" @selected($classes->course_id==$course->id )>{{$course->name}}</option>
-                                        @endforeach
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" @selected($category->id==$classes->category_id)>{{ $category->name }}</option>
+                                    @endforeach
                                 </select>
-          </div> --}}
+                               
+
+                                @error('category')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                       
+        </div>
+
 
         
 

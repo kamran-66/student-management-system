@@ -9,3 +9,52 @@
 input, select {
     @apply bg-white py-3 px-2 border border-gray-600 rounded-md
 }
+
+
+/* Global background */
+/* body {
+    background-color: #f0f0f0 !important;
+} */
+
+/* Navbar */
+.navbar-custom {
+    background: #4F46E5; /* Elegant Indigo */
+    color: white;
+}
+
+/* Logo + text */
+.navbar-custom a {
+    color: white !important;
+}
+
+/* Cards */
+.card-custom {
+    background: #FFFFFF;
+    border-radius: 1rem;
+    border: 1px solid #E5E7EB;
+    transition: 0.3s ease;
+}
+
+.card-custom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* Titles */
+.title-main {
+    color: #1F2937;
+}
+
+/* Subtext */
+.text-muted {
+    color: #6B7280;
+}
+
+/* Buttons */
+.btn-primary {
+    background: #4F46E5;
+}
+
+.btn-primary:hover {
+    background: #4338CA;
+}

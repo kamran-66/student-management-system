@@ -4,11 +4,16 @@
     <main class="p-6">
         <div class="max-w-7xl mx-auto">
             <div class=" flex justify-between items-center">
-            <div>
+            {{-- <div>
             <h2 class="text-3xl font-bold text-gray-800 mb-2">Sections Dashboard</h2>
             <p class="text-gray-600 mb-6">Use the sidebar to navigate through your pages.</p>
-            </div>
+            </div> --}}
 
+                <x-page-heading
+                heading="Welcome to Sections Dashboard"
+                subheading="Use the sidebar to navigate through your pages.">
+                
+            </x-page-heading>
             
     @if (session('success'))
     <div 
@@ -27,15 +32,17 @@
 </a>
 </div>
 
-            <h3 class="text-2xl font-semibold text-gray-700 mb-4">All Sections Data</h3>
+            
 
-            <div class="overflow-x-auto bg-white border border-gray-200 shadow-sm rounded-lg">
+            <div class="overflow-x-auto bg-white border border-gray-200 shadow-sm rounded-lg mt-6">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="py-2 px-4 border-b text-left">ID</th>
-                        <th class="py-2 px-4 border-b text-left">Name</th>
-                        <th class="py-2 px-4 border-b text-left">Academic Year</th>
+                        <th class="py-2 px-4 border-b text-left">Section Name</th>
+                        <th class="py-2 px-4 border-b text-left">Batch Year</th>
+                        {{-- <th class="py-2 px-4 border-b text-left">programs</th> --}}
+                        
                         {{-- <th class="py-2 px-4 border-b text-left">Course</th> --}}
                         <th class="py-2 px-4 border-b text-left">Actions</th>
                     </tr>
@@ -45,10 +52,11 @@
                      @foreach ($sections as $section)
                         <tr class="hover:bg-gray-50">
                             <td class="py-2 px-4 border-b">{{ $section->id }}</td>
-                            <td class="py-2 px-4 border-b">{{ $section->name }}</td>
+                            <td class="py-2 px-4 border-b">{{ $section->academicYear->category->name . " - " .$section->name ??  'No Data' }}</td>
                             <td class="py-2 px-4 border-b">{{ $section->academicYear->name ??  'No Data' }}</td>
-                            {{-- <td class="py-2 px-4 border-b">{{ $section->course->name ??  'No Data' }}</td> --}}
-                            <td >
+                         
+                           
+<td>
 <form action="{{ route('sections.destroy', $section->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
     @csrf
     @method('POST')
@@ -61,6 +69,7 @@
     </a>
 </form>
 
+</td>
 
                         </tr>
 

@@ -17,7 +17,7 @@
 
         
     </head>
-    <body class="font-sans antialiased">
+    {{-- <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
             @include('layouts.navigation')
 
@@ -35,5 +35,31 @@
                 {{ $slot }}
             </main>
         </div>
-    </body>
+    </body> --}}
+
+    {{-- <body class="font-sans bg-gray-50 text-gray-800">
+  <div class="min-h-screen">
+    @include('layouts.navigation')  <!-- change nav here -->
+    <main class="py-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {{ $slot }}
+      </div>
+    </main>
+  </div>
+</body> --}}
+
+<body class="min-h-screen bg-gray-100 text-gray-900">
+    <div class="flex">
+        @include('layouts.sidebar')   <!-- NEW SIDEBAR -->
+        <div class="flex-1">
+            @include('layouts.navigation')
+            <!-- Page Content -->
+            <main class="p-6">
+                {{ $slot }}
+            </main>
+        </div>
+    </div>
+</body>
+
+
 </html>

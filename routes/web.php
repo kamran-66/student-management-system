@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
+Route::get('/studentdashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -33,6 +33,7 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
 
     
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/admin/admindashboard', [AdminController::class, 'view'])->name('admindashboard');
     Route::get('/admin/{id}/edit', [AdminController::class, 'edit'])->name('edit');
     Route::get('/admin/{id}/show', [AdminController::class, 'show'])->name('show');
     Route::put('/admin/{id}/update', [AdminController::class, 'update'])->name('update');
@@ -45,6 +46,7 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
 Route::middleware(['auth', 'role:teacher'])->name('teachers.')->group(function () {
 
 Route::get('/teachers/dashboard', [TeachersController::class, 'index'])->name('dashboard');
+Route::get('/teachers/teacherdashboard', [TeachersController::class, 'view'])->name('teacherdashboard');
 Route::get('/teachers/add', [TeachersController::class, 'create'])->name('add');
 Route::post('/teachers/store', [TeachersController::class, 'store'])->name('store');
 Route::get('/teachers/{id}/edit', [TeachersController::class, 'edit'])->name('edit');
@@ -57,6 +59,7 @@ Route::post('/teachers/{id}/destroy', [TeachersController::class, 'destroy'])->n
 Route::middleware(['auth', 'role:student'])->name('students.')->group(function (){
 
 Route::get('/students/dashboard', [StudentsController::class, 'index'])->name('dashboard');
+Route::get('/students/studentdashboard', [StudentsController::class, 'view'])->name('studentdashboard');
 Route::get('/students/add', [StudentsController::class, 'create'])->name('add');
 Route::post('/students/add', [StudentsController::class, 'store'])->name('store');
 Route::get('/students/{id}/edit', [StudentsController::class, 'edit'])->name('edit');

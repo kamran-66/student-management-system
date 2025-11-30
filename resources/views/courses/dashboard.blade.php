@@ -4,11 +4,16 @@
     <main class="p-6">
         <div class="max-w-7xl mx-auto">
             <div class=" flex justify-between items-center">
-            <div>
+            {{-- <div>
             <h2 class="text-3xl font-bold text-gray-800 mb-2">Courses Dashboard</h2>
             <p class="text-gray-600 mb-6">Use the sidebar to navigate through your pages.</p>
-            </div>
+            </div> --}}
 
+            <x-page-heading
+                heading="Welcome to Courses Dashboard"
+                subheading="Use the sidebar to navigate through your pages.">
+
+            </x-page-heading>
             
                    @if (session('success'))
     <div 
@@ -27,16 +32,15 @@
 </a>
 </div>
 
-            <h3 class="text-2xl font-semibold text-gray-700 mb-4">All Courses Data</h3>
 
-            <div class="overflow-x-auto bg-white border border-gray-200 shadow-sm rounded-lg">
+            <div class="overflow-x-auto bg-white border border-gray-200 shadow-sm rounded-lg mt-6">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-100">
                     <tr>
                         <th class="py-2 px-4 border-b text-left">ID</th>
-                        <th class="py-2 px-4 border-b text-left">Name</th>
-                        <th class="py-2 px-4 border-b text-left">Category</th>
-                        <th class="py-2 px-4 border-b text-left">Academic_Year</th>
+                        <th class="py-2 px-4 border-b text-left">Course Name</th>
+                        <th class="py-2 px-4 border-b text-left">Programs</th>
+                        <th class="py-2 px-4 border-b text-left">Batch Year</th>
                         <th class="py-2 px-4 border-b text-left">Actions</th>
                     </tr>
                 </thead>

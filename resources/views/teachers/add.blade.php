@@ -2,13 +2,23 @@
     
     <div class="w-8/12 mx-auto">
         
-        <form method="POST" action="{{ route('teachers.store') }}">
+        <form method="POST" action="{{ route('teachers.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div>
             <h2 class="text-3xl font-bold text-gray-800 mb-2 mt-6">Add Teacher</h2>
             <p class="text-gray-600 mb-6">Use the sidebar to navigate through your pages.</p>
             </div>
+
+
+
+        <!-- Image -->
+        <div>
+            <x-input-label for="image" :value="__('Profile Image')" />
+            <x-text-input id="image"  class="border p-2 w-full" type="file" name="image"   required autofocus autocomplete="image" />
+            <x-input-error :messages="$errors->get('image')" class="mt-2" />
+                  
+        <div>
 
         <!-- Name -->
         <div>

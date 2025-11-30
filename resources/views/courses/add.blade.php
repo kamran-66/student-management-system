@@ -19,11 +19,11 @@
 
         <!-- Category -->
         <div class="mt-4">
-            <x-input-label for="category" :value="__('Category_id')" />
+            <x-input-label for="category" :value="__('Program_id')" />
             
                              <div class="mt-4">
                                 <select name="category_id" id="category_id" class="block mt-1 w-full py-3 bg-white rounded-md shadow-sm focus:ring focus:ring-indigo-200" :value="old('category_id')" required autocomplete>
-                                    <option value="">Select Category</option>
+                                    <option value="">Select Program</option>
                                     
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->name }}</option>

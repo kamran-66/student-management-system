@@ -8,7 +8,7 @@
 
 
     <div>
-            <h2 class="text-3xl font-bold text-gray-800 mb-2 mt-6">Edit Category</h2>
+            <h2 class="text-3xl font-bold text-gray-800 mb-2 mt-6">Edit Program</h2>
             <p class="text-gray-600 mb-6">Use the sidebar to navigate through your pages.</p>
             </div>
 

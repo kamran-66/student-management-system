@@ -26,14 +26,24 @@ class StudentsController extends Controller
     public function index()
     {
 
-            //  $users = User::with(['section.course', 'section.academicYear'])
-            //      ->where('role', 'student')
-            //      ->get();
+          
+            $batches = Academic::all();
             
-            $students = User::where('role','student')->get();
+            $students = User::where('role','student')->paginate(8);
             return view('students.dashboard', compact('students'));
       
     }
+
+    public function view()
+    {
+         $courses = Course::all();
+            $student = auth()->user();
+            return view('students.studentdashboard', compact('student','courses'));
+      
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -52,24 +62,41 @@ class StudentsController extends Controller
     {
 
        $validated = $request->validate([
-           'name' => 'required|string|max:255',
+
+        'image' => 'nullable|mimes:jpg,jpeg,png|max:4096',
+        'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users',
         'password' => 'required|min:6',
         'registration_no' => 'required|string|unique:users',
         'section_id' => 'required|exists:sections,id',
+        // 'course_id' => 'required|exists:courses,id',
 
     ]);
 
 
     $student = User::create([
-        'name' => $request['name'],
-        'email' => $request['email'],
+        'name' => $request->name,
+        'email' => $request->email,
         'password' => Hash::make($request->password),
         'role' => 'student',
-        'registration_no' => $request['registration_no'],
+        'registration_no' => $request->registration_no,
         'section_id' => $request->section_id,
+        'course_id' => $request->course_id,
     ]);
 
+        //Upload image (if exists)
+        
+    if ($request->hasFile('image')) {
+ 
+        $file = $request->file('image');
+        $filename = time() . '-' . $file->getClientOriginalName();
+
+        // Save inside /public/users
+        $file->move(public_path('users'), $filename);
+
+        $student->image = $filename;
+        $student->save();
+    }
     return redirect()->route('students.dashboard')->with('success', 'Student added successfully!');
 
 
@@ -84,12 +111,13 @@ class StudentsController extends Controller
  public function show(string $id)
 {
 
+       $courses = Course::all();
     
     $student = User::with(['section.course', 'section.academicYear'])
                 ->where('role', 'student')
                 ->findOrFail($id);
 
-    return view('students.show', compact('student'));
+    return view('students.show', compact('student','courses'));
 }
 
 
@@ -99,9 +127,15 @@ class StudentsController extends Controller
     public function edit(string $id)
     {
        $sections = Section::all();
+       $courses = Course::all();
 
         $student = User::findorfail($id);
-         return view('students.edit', compact('student','sections'));
+
+            if (auth()->user()->role !== 'admin' && auth()->id() !== $student->id) {
+        abort(403, 'Unauthorized');
+    }
+
+         return view('students.edit', compact('student','sections','courses'));
     }
 
     /**
@@ -112,20 +146,39 @@ class StudentsController extends Controller
 
         $student = User::findorfail($id);
 
+        if (auth()->user()->role !== 'admin' && auth()->id() !== $student->id) {
+        abort(403, 'Unauthorized');
+        }
+
         $validated = $request->validate([
+            'image' => 'nullable|image|mimes:jpg,jpeg,png|max:4096',
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255'],
-             'registration_no' => ['required','string','unique:users,registration_no'.$id],
+             'email' => 'required', 'email', 'max:255',
             'section_id' => 'required|exists:sections,id',
+            // 'course_id' => 'required|exists:courses,id',
             
+             ]);
 
+    if ($request->hasFile('image')) {
 
-            
-        ]);
+        // Delete old image
+        if ($student->image && file_exists(public_path('users/' . $student->image))) {
+            unlink(public_path('users/' . $student->image));
+        }
 
-         $student->update($validated);
-         return redirect()->route('students.dashboard')->with('success','Student succesfully updated');
+        // Upload new image to public/users
+        $file = $request->file('image');
+        $filename = time() . '-' . $file->getClientOriginalName();
+        $file->move(public_path('users'), $filename);
+
+        $validated['image'] = $filename;
     }
+
+    // Update student
+    $student->update($validated);
+
+    return redirect()->route('students.studentdashboard',$student->id)->with('success', 'Student updated successfully!');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -137,4 +190,5 @@ class StudentsController extends Controller
 
         return redirect()->route('students.dashboard')->with('success','Student succesfully deleted');
     }
+
 }
