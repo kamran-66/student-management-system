@@ -34,26 +34,54 @@ class AdminController extends Controller
     {
         $user = auth()->user();
 
-    // COUNT ANALYTICS
-    $student = User::where('role', 'student')->count();
-    $teacher = User::where('role', 'teacher')->count();
-    $course = Course::count();
-    $section = Section::count();
-    $academic = Academic::count();
-    $category = Category::count();
+            // COUNT ANALYTICS
+            $student = User::where('role', 'student')->count();
+            $teacher = User::where('role', 'teacher')->count();
+            $course = Course::count();
+            $section = Section::count();
+            $academic = Academic::count();
+            $category = Category::count();
 
-    return view('admin.admindashboard', compact(
-        'user',
-        'student',
-        'teacher',
-        'course',
-        'section',
-        'academic',
-        'category',
+            return view('admin.admindashboard', compact(
+                'user',
+                'student',
+                'teacher',
+                'course',
+                'section',
+                'academic',
+                'category',
     ));
             // return view('admin.admindashboard', compact('user','student'));
       
     }
+    
+
+
+
+
+    public function search(Request $request)
+{
+
+    $search = $request->input('search');
+    $users = User::where('name','like',"%$request->search%")->paginate(10);
+
+    // SEARCH USERS
+    // $users = User::query();
+
+    // if ($search) {
+    //     $users->where(function ($q) use ($search) {
+    //         $q->where('name', 'like', "%{$search}%")
+    //           ->orWhere('email', 'like', "%{$search}%");
+    //     });
+    // }
+  
+
+            return view('admin.search', compact(
+                'users',
+                'search',
+            ));
+}
+
     /**
      * Show the form for creating a new resource.
      */

@@ -38,10 +38,8 @@ class User extends Authenticatable
     // RELATIONSHIPS
  
 
-    //  Students -> Courses
-
-
     // Student belongs to a section
+
     public function section()
     {
         return $this->belongsTo(Section::class);
@@ -49,19 +47,12 @@ class User extends Authenticatable
 
 
 
-    // Access courses via section
-   public function courses()
+    public function courses()
     {
-        return $this->hasManyThrough(
-            Course::class,       // final model
-            Section::class,      // intermediate
-            'teacher_id',        // FK on sections table pointing to user
-            'academic_year_id',  // FK on courses table pointing to academic
-            'id',                // local key on users table
-            'academic_year_id'   // local key on sections table
-        );
-
+        return $this->belongsToMany(Course::class, 'course_student', 'student_id', 'course_id');
     }
+
+
 
     // Access academic year via section
     public function academicYear()
@@ -71,4 +62,31 @@ class User extends Authenticatable
 
 
 }
+
+
+
+
+
+  //  Students -> Courses
+
+//    public function courses()
+// {
+//     return $this->belongsToMany(Course::class, 'course_student', 'student_id', 'course_id')
+//                 ->withTimestamps();
+// }
+
+
+    // Access courses via section
+//    public function courses()
+//     {
+//         return $this->hasManyThrough(
+//             Course::class,       // final model
+//             Section::class,      // intermediate
+//             'teacher_id',        // FK on sections table pointing to user
+//             'academic_year_id',  // FK on courses table pointing to academic
+//             'id',                // local key on users table
+//             'academic_year_id'   // local key on sections table
+//         );
+
+//     }
 

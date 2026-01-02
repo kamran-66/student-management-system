@@ -56,6 +56,19 @@
                 <x-input-error :messages="$errors->get('registration_no')" class="mt-2" />
             </div>
 
+              <!-- Course_id -->
+             {{-- <div class="mt-4">
+                                <x-input-label for="course_id" :value="__('Course id')" />
+                                <select name="course_id" id="_id" class="block mt-1 w-full py-3 bg-white rounded-md shadow-sm focus:ring focus:ring-indigo-200" :value="old('course_id')" required autocomplete>
+                                    <option value="">Select Course</option>
+                                    
+                                    @foreach($courses as $course)
+                                        <option value="{{$course->id}}">{{$course->name}}</option>
+                                        @endforeach
+                                </select>
+          </div> --}}
+
+
             <!-- Class / Teacher -->
             {{-- <div class="mt-4">
                 <x-input-label for="teacher_id" :value="__('Teacher Name')" />

@@ -11,12 +11,6 @@
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
                     <tbody class="bg-white divide-y divide-gray-200">
-
-                        <tr>
-                            <th class="px-4 py-2 text-left text-gray-600 w-40">id:</th>
-                            <td class="px-4 py-2">{{ $student->id }}</td>
-                        </tr>
-                        
                         <tr>
                             <th class="px-4 py-2 text-left text-gray-600 w-40">Image:</th>
                             {{-- <td class="px-4 py-2">{{ $student->image }}</td> --}}
@@ -28,7 +22,6 @@
                 </td>
                         </tr>
 
-                        
                         <tr>
                             <th class="px-4 py-2 text-left text-gray-600 w-40">Name:</th>
                             <td class="px-4 py-2">{{ $student->name }}</td>
@@ -38,17 +31,17 @@
                             <td class="px-4 py-2">{{ $student->email }}</td>
                         </tr>
                         <tr>
-                            <th class="px-4 py-2 text-left text-gray-600">Registration No:</th>
+                            {{-- <th class="px-4 py-2 text-left text-gray-600">Registration No:</th>
                             <td class="px-4 py-2">{{ $student->registration_no ?? 'N/A' }}</td>
                         </tr>
                         <tr>
                             <th class="px-4 py-2 text-left text-gray-600">Section:</th>
                             <td class="px-4 py-2">{{ $student->section?->name." - ". $student->section->academicYear?->category->name ?? 'No Data' }}</td>
                         </tr>
-                        <tr>
-                            <th class="px-4 py-2 text-left text-gray-600">Teacher:</th>
+                        <tr> --}}
+                            {{-- <th class="px-4 py-2 text-left text-gray-600">Teacher:</th>
                             <td class="px-4 py-2"> {{ $student->section?->teacher->name ?? 'N/A' }}</td>
-                        </tr>
+                        </tr> --}}
                         <tr>
                             <th class="px-4 py-2 text-left text-gray-600">Batch Year:</th>
                             <td class="px-4 py-2">{{ $student->section?->academicYear?->name ?? 'No Data' }}</td>
@@ -58,9 +51,11 @@
                         <th class="px-4 py-2 text-left text-gray-600">Course:</th>
                         <td class="px-4 py-2">
                             <div class="space-x-2">
-                              @foreach ($student->section->academicYear->courses as $course)
-                                    <span class="px-3 py-1 bg-green-500 text-white rounded-lg">{{$course->name}}</span>
-                                 @endforeach
+                
+                            @foreach ($student->courses as $course)
+                                <span class="px-3 py-1 bg-green-500 text-white rounded-lg">{{$course->name}}</span>
+                            @endforeach
+            
                               </div>
                           </td>
                       </tr>
@@ -70,7 +65,7 @@
 
             {{-- Back Button --}}
             <div class="mt-6">
-                <a href="{{ route('students.dashboard') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
+                <a href="{{ route('students.stcourse') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold transition">
                     Back
                 </a>
             </div>

@@ -2,7 +2,7 @@
 
     <div class="w-8/12 mx-auto">
     
-<form action="{{route('students.update', $student->id)}}" method="POST" enctype="multipart/form-data">
+<form  id="editForm"  action="{{route('students.update', $student->id)}}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
@@ -11,6 +11,10 @@
             <p class="text-gray-600 mb-6">Use the sidebar to navigate through your pages.</p>
             </div>
 
+                <div id="successMsg"
+     class="fixed top-4 right-4 bg-green-500 text-white px-4 py-2 rounded shadow-lg hidden z-50">
+    Success!
+</div>
 
 
              <!-- Image -->
@@ -24,12 +28,6 @@
                 @endif
         </div>
 
-             {{-- <label class="block mt-4">Profile Image</label>
-    <input type="file" name="image" class="border p-2 w-full">
-
-    @if($student->image)
-        <img src="{{ asset('storage/users/'.$student->image) }}" class="w-24 mt-3 rounded">
-    @endif --}}
 
       <!-- Name -->
         <div>
@@ -64,16 +62,16 @@
 
             <!-- Course_id -->
 
-          {{-- <div class="mt-4">
-                                <x-input-label for="course_id" :value="__('Course id')" />
-                                <select name="course_id" id="_id" class="block mt-1 w-full py-3 bg-white rounded-md shadow-sm focus:ring focus:ring-indigo-200" :value="old('course_id')" required autocomplete>
-                                    <option value="">Select Course</option>
-                                    
-                                    @foreach($courses as $course)
-                                        <option value="{{$course->id}}">{{$course->name}}</option>
-                                        @endforeach
-                                </select>
-          </div> --}}
+          <div class="mt-4">
+            <x-input-label for="course_id" :value="__('Course id')" />
+            <select name="course_id" id="_id" class="block mt-1 w-full py-3 bg-white rounded-md shadow-sm focus:ring focus:ring-indigo-200" :value="old('course_id')" required autocomplete>
+                <option value="">Select Course</option>
+                
+                @foreach($courses as $course)
+                    <option value="{{$course->id}}">{{$course->name}}</option>
+                    @endforeach
+            </select>
+          </div>
 
           
 

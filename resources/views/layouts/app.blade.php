@@ -13,7 +13,9 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
         
     </head>
@@ -59,6 +61,21 @@
             </main>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<!-- your existing modal + Ajax scripts here -->
+
+
+<!-- Select2 script (place at the BOTTOM of the page) -->
+<script>
+    $(document).ready(function() {
+        $('#selectCourses').select2({
+            placeholder: "Select courses",
+            allowClear: true
+        });
+    });
+</script>
+
 </body>
 
 

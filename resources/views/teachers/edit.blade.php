@@ -15,7 +15,7 @@
               <!-- Image -->
         <div>
             <x-input-label for="image" :value="__('Profile Image')" />
-            <x-text-input id="image"  value="{{ old('image',$teacher->image) }}"  class="border p-2 w-full" type="file" name="image"   required autofocus autocomplete="image" />
+            <x-text-input id="image"  value="{{ old('image',$teacher->image) }}"  class="border p-2 w-full" type="file" name="image"    autofocus autocomplete="image" />
             <x-input-error :messages="$errors->get('image')" class="mt-2" />
                   @if($teacher->image)
                     <img src="{{ asset('users/'.$teacher->image) }}" class="w-24 mt-3 rounded">

@@ -1,4 +1,4 @@
-<div class="w-64 min-h-screen bg-gradient-to-b from-purple-700 to-indigo-800 text-white shadow-lg">
+<div class="w-64 min-h-screen bg-gray-700 text-white shadow-lg">
     <div class="p-6 text-2xl font-bold">
         🎓 College Panel
     </div>
@@ -6,7 +6,10 @@
     <nav class="mt-4 space-y-2">
 
 
-                @if(Auth::user()->role === 'student')
+               @if(Auth::check() && Auth::user()->role === 'student')
+    <!-- Show content for students -->
+
+
                     <a href="{{ route('students.studentdashboard') }}"
            class="flex items-center gap-3 px-6 py-3 hover:bg-white/10 rounded-lg">
             <i class="fas fa-user-graduate"></i> Student Dashboard
@@ -15,7 +18,10 @@
 
 
                     <!-- Teacher Links -->
-                    @if(Auth::user()->role === 'teacher')
+                    @if(Auth::check() && Auth::user()->role === 'teacher')
+    <!-- Show content for Teacher -->
+
+
                                <a href="{{ route('teachers.teacherdashboard') }}"
            class="flex items-center gap-3 px-6 py-3 hover:bg-white/10 rounded-lg">
             <i class="fas fa-user-graduate"></i> Teacher Dashboard
@@ -23,7 +29,10 @@
                     @endif
 
                     
-                    @if(Auth::user()->role === 'admin')
+                   @if(Auth::check() && Auth::user()->role === 'admin')
+    <!-- Show content for Admin -->
+
+
                     
                     <a href="{{ route('admin.admindashboard') }}"
                        class="flex items-center gap-3 px-6 py-3 hover:bg-white/10 rounded-lg">
@@ -36,6 +45,10 @@
         <a href="{{ route('students.dashboard') }}"
            class="flex items-center gap-3 px-6 py-3 hover:bg-white/10 rounded-lg">
             <i class="fas fa-user-graduate"></i> Students
+        </a>
+        <a href="{{ route('students.stcourse') }}"
+           class="flex items-center gap-3 px-6 py-3 hover:bg-white/10 rounded-lg">
+            <i class="fas fa-user-graduate"></i> Select Courses
         </a>
 
         <a href="{{ route('teachers.dashboard') }}"

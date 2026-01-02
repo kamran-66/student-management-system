@@ -95,11 +95,13 @@ class CourseController extends Controller
             'category_id' => ['required'],
             'academic_year_id' => ['required'],
             
+            
         ]);
 
         $course->name = $request->name;
         $course->category_id = $request->category_id;
         $course->academic_year_id = $request->academic_year_id;
+        
        
 
         $course->save();

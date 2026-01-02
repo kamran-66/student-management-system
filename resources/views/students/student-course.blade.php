@@ -1,116 +1,81 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="text-2xl font-bold text-gray-800">
-            Student Dashboard
-        </h2>
-    </x-slot>
+  <main class="p-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex justify-between items-center">
+        <x-page-heading heading="Course Students Dashboard" subheading="Use the sidebar to navigate through your pages." />
+        
+        @if (session('success'))
+          <div x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 3000)"
+               class="mb-4 rounded-lg bg-green-100 border border-green-300 text-green-800 px-4 py-3">
+            {{ session('success') }}
+          </div>
+        @endif
 
-    <div class="py-10">
-        <div class="max-w-6xl mx-auto px-6">
+        <a href="{{ route('students.add') }}" class="px-4 py-2 rounded-lg font-semibold bg-green-600 text-white hover:bg-green-700">
+          Add Student
+        </a>
+      </div>
 
-                               @if (session('success'))
-    <div 
-        x-data="{ show: true }" 
-        x-show="show" 
-        x-transition 
-        x-init="setTimeout(() => show = false, 3000)" 
-        class="mb-4 rounded-lg bg-green-100 border border-green-300 text-green-800 px-4 py-3"
-    >
-        {{ session('success') }}
-    </div>
-    @endif
-            
-            <div class="bg-white text-black rounded-xl shadow-lg p-6 mt-6">
-                <h3 class="text-2xl font-semibold">
-                    Welcome, {{ $student->name }}! 🎉
-                </h3>
-                <p class="opacity-90 mt-1">Here are your academic details.</p>
-            </div>
 
-           
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
-
-               
-                <div class="bg-white shadow-lg rounded-xl p-6 flex flex-col items-center">
-                    <img 
-                        src="{{ $student->image ? asset('users/'.$student->image) : 'https://via.placeholder.com/100' }}"
-                        class="w-38 h-28 rounded-full shadow border mt-8"
-                    >
-
-                    <h3 class="text-xl font-bold mt-4">{{ $student->name }}</h3>
-                    <p class="text-gray-600 text-sm">{{ $student->email }}</p>
-
-                    <button type="button" onclick="openEditModal({{ $student->id }})"
-                          class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold mt-3">
-                    Edit Profile
-                  </button>
+      <table class="min-w-full bg-white border border-gray-200 shadow-sm rounded-lg mt-6">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="py-2 px-4 border-b text-left">ID</th>
+            <th class="py-2 px-4 border-b text-left">Name</th>
+            <th class="py-2 px-4 border-b text-left">Email</th>
+            <th class="py-2 px-4 border-b text-left">Registration No</th>
+            <th class="py-2 px-4 border-b text-left">Courses</th>
+            <th class="py-2 px-4 border-b text-left">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach ($students as $student)
+            <tr class="hover:bg-gray-50">
+              <td class="py-2 px-4 border-b">
+                <div class="flex items-center space-x-3">
+                  <span>{{ $student->id }}</span>
+                  @if($student?->image)
+                    <img src="{{ asset('users/'.$student->image) }}" class="w-10 h-10 rounded-full border border-gray-700 bg-gray-500 ml-3">
+                  @endif
                 </div>
-
-               
-                <div class="lg:col-span-2 bg-white shadow-lg rounded-xl p-6 mb-8">
-                    <h3 class="text-xl font-semibold text-gray-700 mb-4">Student Information</h3>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-
-                        <div class="p-4 bg-gray-50 rounded-lg">
-                            <p class="text-gray-500 text-sm">Registration No</p>
-                            <p class="font-semibold text-gray-800">{{ $student->registration_no }}</p>
-                        </div>
-
-                        {{-- <div class="p-4 bg-gray-50 rounded-lg">
-                            <p class="text-gray-500 text-sm">Section</p>
-                            <p class="font-semibold text-gray-800">{{ $student->section?->name. " - ". $student->section->academicYear->category->name ?? 'No Data'}}</p>
-                        </div> --}}
-
-                        <div class="p-4 bg-gray-50 rounded-lg">
-                            <p class="text-gray-500 text-sm">Batch Year</p>
-                            <p class="font-semibold text-gray-800">
-                                {{ $student->section?->academicYear?->name ?? 'N/A' }}
-                            </p>
-                        </div>
-
-                        <div class="p-4 bg-gray-50 rounded-lg">
-                            <p class="text-gray-500 text-sm">Teacher</p>
-                            <p class="font-semibold text-gray-800">
-                                {{ $student->section?->teacher?->name ?? 'N/A' }}
-                            </p>
-                        </div>
-
-                        
-                        {{-- <div class="p-4 bg-gray-50 rounded-lg">
-                            <p class="text-gray-500 text-sm">Courses</p>
-                            <p class="font-semibold text-gray-800">
-                                @foreach ($student->courses as $course)
+              </td>
+              <td class="py-2 px-4 border-b">{{ $student->name }}</td>
+              <td class="py-2 px-4 border-b">{{ $student->email }}</td>
+              <td class="py-2 px-4 border-b">{{ $student->registration_no ?? 'No Data' }}</td>
+              <td class="py-2 px-4 border-b">
+                
+                @foreach ($student->courses as $course)
                     {{ $course->name }}, 
                 @endforeach
-                            </p>
-                        </div> --}}
+              </td>
 
-                    
+              <td class="py-2 px-4 border-b">
+                <div class="flex space-x-2">
+                  <a href="{{ route('students.stview', $student->id) }}" class="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg text-sm font-semibold">View</a>
 
-                    </div>
-                    
+                  <button type="button" onclick="openEditModal({{ $student->id }})"
+                          class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-semibold">
+                    Edit
+                  </button>
 
-                    <!-- Courses -->
-                    <div class="mt-6">
-                        <h4 class="text-lg font-semibold text-gray-700 mb-2  ml-3">Courses</h4>
-                        
-                        <div class="flex flex-wrap gap-2">
-                           @foreach ($student->courses as $course)
-                                <span class="px-4 py-1 bg-indigo-600 text-white rounded-full shadow text-sm ml-2">
-                                    {{ $course->name }}
-                                </span>
-                            @endforeach
-                        </div>
-                    </div>
+                  <form action="{{ route('students.delete', $student->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
+                    @csrf @method('DELETE')
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm font-semibold">Delete</button>
+                  </form>
                 </div>
+              </td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
 
-            </div>
+      <div class="mt-4 flex justify-center">
+        {{ $students->links() }}
+      </div>
+    </div>
+  </main>
 
-        </div>
-
-
-   <!-- EDIT STUDENT MODAL (blur background, centered) -->
+  <!-- EDIT STUDENT MODAL (blur background, centered) -->
   <div id="editModal"
        class="fixed inset-0 backdrop-blur-sm bg-black/20 hidden justify-center items-center z-50">
     <div class="bg-white w-full max-w-xl p-6 rounded-lg shadow-lg mx-4">
@@ -146,6 +111,12 @@
 
               <label class="block mb-1 font-semibold">Courses</label>
 
+                <select id="selectCourses" name="courses[]" multiple="multiple" style="width: 100%;">
+            @foreach ($courses as $course)
+        <option value="{{ $course->id }}">{{ $course->name }}</option>
+            @endforeach
+        </select>
+
               {{-- <div id="edit_courses" class="grid grid-cols-2 gap-2">
                 @foreach ($courses as $course)
                   <label class="flex items-center gap-2">
@@ -154,13 +125,6 @@
                   </label>
                 @endforeach
               </div> --}}
-
-              <select id="selectCourses" name="courses[]" multiple="multiple" style="width: 100%;">
-            @foreach ($courses as $course)
-        <option value="{{ $course->id }}">{{ $course->name }}</option>
-            @endforeach
-        </select>
-
 
 
 
@@ -175,7 +139,7 @@
   </div>
 
 
-    <!-- JS: open modal, close modal, submit via AJAX -->
+  <!-- JS: open modal, close modal, submit via AJAX -->
 
   <script>
     // expose functions globally
@@ -261,5 +225,5 @@
       });
     });
   </script>
-    </div>
+
 </x-app-layout>

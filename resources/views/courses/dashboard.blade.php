@@ -27,7 +27,7 @@
     </div>
 @endif
                     <a href="{{ route('courses.add') }}" 
-   class="px-4 py-2 rounded-lg font-semibold {{ request()->routeIs('admin.courses') ?  : 'bg-green-500 text-white hover:bg-green-600' }}">
+   class="px-4 py-2 rounded-lg font-semibold {{ request()->routeIs('admin.courses') ?  : 'bg-green-600 text-white hover:bg-green-700' }}">
    Add Course
 </a>
 </div>

@@ -19,6 +19,7 @@
         </div>
 
     <div class="mt-4">
+                                <x-input-label for="academic_year_id" :value="__('Batch Year')" />
                                 <select name="academic_year_id" id="academic_year_id" class="block mt-1 w-full py-3 bg-white rounded-md shadow-sm focus:ring focus:ring-indigo-200" :value="old('academic_year_id')" required autocomplete>
                                     <option value="">Select Class</option>
 

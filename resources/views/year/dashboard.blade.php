@@ -27,8 +27,8 @@
     </div>
 @endif
                     <a href="{{ route('year.add') }}" 
-   class="px-4 py-2 rounded-lg font-semibold bg-green-500 text-white hover:bg-green-600">
-   Add Academic Year
+   class="px-4 py-2 rounded-lg font-semibold bg-green-600 text-white hover:bg-green-700">
+   Add New
 </a>
 </div>
 

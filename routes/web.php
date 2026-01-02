@@ -33,7 +33,12 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
 
     
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('dashboard');
+    Route::get('/admin/users', [AdminController::class, 'search'])->name('users');
     Route::get('/admin/admindashboard', [AdminController::class, 'view'])->name('admindashboard');
+
+    Route::get('/admin/search', [AdminController::class, 'search'])
+     ->name('searchdashboard.search');
+
     Route::get('/admin/{id}/edit', [AdminController::class, 'edit'])->name('edit');
     Route::get('/admin/{id}/show', [AdminController::class, 'show'])->name('show');
     Route::put('/admin/{id}/update', [AdminController::class, 'update'])->name('update');
@@ -46,28 +51,49 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->group(function () {
 Route::middleware(['auth', 'role:teacher'])->name('teachers.')->group(function () {
 
 Route::get('/teachers/dashboard', [TeachersController::class, 'index'])->name('dashboard');
-Route::get('/teachers/teacherdashboard', [TeachersController::class, 'view'])->name('teacherdashboard');
+Route::get('/teachers/teacherdashboard', [TeachersController::class, 'TeacherDashboard'])->name('teacherdashboard');
 Route::get('/teachers/add', [TeachersController::class, 'create'])->name('add');
 Route::post('/teachers/store', [TeachersController::class, 'store'])->name('store');
 Route::get('/teachers/{id}/edit', [TeachersController::class, 'edit'])->name('edit');
 Route::get('/teachers/{id}/show', [TeachersController::class, 'show'])->name('show');
 Route::put('/teachers/{id}/update', [TeachersController::class, 'update'])->name('update');
-Route::post('/teachers/{id}/destroy', [TeachersController::class, 'destroy'])->name('destroy');
+Route::delete('/teachers/{id}/destroy', [TeachersController::class, 'destroy'])->name('destroy');
+
+
+Route::get('/teachers/{id}/teachersedit', [TeachersController::class, 'teacherEdit'])->name('teachersedit');
+Route::put('/teachers/{id}/teachersupdate', [TeachersController::class, 'teacherUpdate'])->name('teachersupdate');
+
+
 });
 
 
-Route::middleware(['auth', 'role:student'])->name('students.')->group(function (){
+// Route::middleware(['auth', 'role:student'])->name('students.')->group(function (){
+    Route::middleware(['auth', 'role:student,admin'])->name('students.')->group(function (){
 
-Route::get('/students/dashboard', [StudentsController::class, 'index'])->name('dashboard');
-Route::get('/students/studentdashboard', [StudentsController::class, 'view'])->name('studentdashboard');
-Route::get('/students/add', [StudentsController::class, 'create'])->name('add');
-Route::post('/students/add', [StudentsController::class, 'store'])->name('store');
-Route::get('/students/{id}/edit', [StudentsController::class, 'edit'])->name('edit');
-Route::get('/students/{id}/show', [StudentsController::class, 'show'])->name('show');
-Route::put('/students/{id}/update', [StudentsController::class, 'update'])->name('update');
-Route::post('/students/{id}/destroy', [StudentsController::class, 'destroy'])->name('destroy');
+
+        
+        Route::get('/students/dashboard', [StudentsController::class, 'index'])->name('dashboard');
+        Route::get('/students/studentdashboard', [StudentsController::class, 'view'])->name('studentdashboard');
+        Route::get('/students/add', [StudentsController::class, 'create'])->name('add');
+        Route::post('/students/add', [StudentsController::class, 'store'])->name('store');
+        Route::get('/students/{id}/edit', [StudentsController::class, 'edit'])->name('edit');
+        Route::get('/students/{id}/show', [StudentsController::class, 'show'])->name('show');
+        Route::put('/students/{id}/update', [StudentsController::class, 'update'])->name('update');
+        // Route::put('/students/{student}', [StudentController::class, 'update']);
+        
+        Route::get('/students/stcourse', [StudentsController::class, 'dashboard'])->name('stcourse');
+        Route::get('/students/{id}stview', [StudentsController::class, 'studentView'])->name('stview');
+        Route::get('/students/{id}/studentedit', [StudentsController::class, 'studentEdit'])->name('studentedit');
+        Route::put('/students/{id}/courseupdate', [StudentsController::class, 'studentUpdate'])->name('courseupdate');
+        Route::delete('/students/{id}/destroy', [StudentsController::class, 'destroy'])->name('destroy');
+        Route::delete('/students/{id}/delete', [StudentsController::class, 'studentDelete'])->name('delete');
+
+        Route::get('/students/{student}/edit-courses', [StudentController::class, 'editCourses']);
+        Route::post('/students/{student}/update-courses', [StudentController::class, 'updateCourses']);
 
 });
+
+
 
 Route::middleware('auth')->name('courses.')->group(function (){
 
